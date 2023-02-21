@@ -1,0 +1,49 @@
+flow: DistanceAlert
+vars:
+ BASE_DIR: "/home/ato/embedded-world-zf"
+configuration:
+      subscriber: "simu/rt/scan"
+      publisher: "zigbee2mqtt/device/bulb/set"
+
+operators:
+  - id : Process
+    descriptor: "file://{{ BASE_DIR }}/lidar-process/lidar-process.yml"
+  - id : Minimum
+    descriptor: "file://{{ BASE_DIR }}/compute-minimum-distance/compute-minimum-distance.yml"
+  - id : Proximity
+    descriptor: "file://{{ BASE_DIR }}/compute-proximity/compute-proximity.yml"
+sources:
+  - id : ZenohSrc
+    descriptor: "file://{{ BASE_DIR }}/zenoh-source/zenoh-source.yml"
+sinks:
+  - id : ZenohSink
+    descriptor: "file://{{ BASE_DIR }}/zenoh-sink/zenoh-sink.yml"
+
+links:
+- from:
+    node : ZenohSrc
+    output : Data
+  to:
+    node : Process
+    input : scan
+
+- from:
+    node : Process
+    output : front_scan
+  to:
+    node : Minimum
+    input : scan
+
+- from:
+    node : Minimum
+    output : distance
+  to:
+    node : Proximity
+    input : distance
+
+- from:
+    node : Proximity
+    output : light
+  to:
+    node : ZenohSink
+    input : Data

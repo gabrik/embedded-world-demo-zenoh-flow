@@ -1,0 +1,17 @@
+id: compute-proximity
+vars:
+ BASE_DIR: "/home/ato"
+uri: "file://{{BASE_DIR }}/embedded-world-zf/compute-proximity/compute-proximity.py"
+
+configuration:
+  max_range: 0.8
+  min_range: 0.2
+  number_of_proximity_levels: 4
+
+inputs:
+  - id: distance
+    type: float32
+
+outputs:
+  - id: light
+    type: light_ctrl

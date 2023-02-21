@@ -1,0 +1,23 @@
+[package]
+name = "zenoh-source"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+flume = "0.10.14"
+zenoh-flow = { version = "=0.4.0-alpha.1"}
+async-trait = "0.1"
+zenoh = "0.7.0-rc"
+
+[lib]
+name = "zenoh_source"
+crate-type=["cdylib"]
+path="src/lib.rs"
+
+[package.metadata.zenohflow]
+id = "ZenohSource"
+kind = "source"
+outputs=[ {id ="Data", type="_any_"}]
+

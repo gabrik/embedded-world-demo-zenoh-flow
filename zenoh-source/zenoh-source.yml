@@ -1,0 +1,9 @@
+id: zenoh-source
+
+vars:
+ BASE_DIR: "/home/ato"
+uri: "file://{{BASE_DIR }}/embedded-world-zf/zenoh-source/target/release/libzenoh_source.so"
+
+outputs:
+  - id: Data
+    type: _any_

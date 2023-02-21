@@ -1,0 +1,13 @@
+id: lidar-process
+vars:
+ BASE_DIR: "/home/ato"
+uri: "file://{{BASE_DIR }}/embedded-world-zf/lidar-process/lidar-process.py"
+configuration:
+  angle: 60
+inputs:
+  - id: scan
+    type: LaserScan
+
+outputs:
+  - id: front_scan
+    type: LaserScan

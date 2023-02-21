@@ -1,0 +1,23 @@
+[package]
+name = "ZenohSink"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+zenoh-flow = { version = "=0.4.0-alpha.1"}
+async-trait = "0.1"
+zenoh = "0.7.0-rc"
+
+[lib]
+name = "zenoh_sink"
+crate-type=["cdylib"]
+path="src/lib.rs"
+
+[package.metadata.zenohflow]
+id = "ZenohSink"
+kind = "sink"
+inputs=[ {id ="Data", type="_any_"}]
+

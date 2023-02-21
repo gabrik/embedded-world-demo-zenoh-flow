@@ -1,0 +1,9 @@
+id: zenoh-sink
+
+vars:
+ BASE_DIR: "/home/ato"
+uri: "file://{{BASE_DIR }}/embedded-world-zf/zenoh-sink/target/release/libzenoh_sink.so"
+
+inputs:
+  - id: Data
+    type: _any_
