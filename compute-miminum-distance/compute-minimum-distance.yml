@@ -1,7 +1,7 @@
 id: compute-minimum-distance
 vars:
- BASE_DIR: "/home/ato"
-uri: "file://{{BASE_DIR }}/embedded-world-zf/compute-minimum-distance/compute-miminum-distance.py"
+ BASE_DIR: "/home/ato/Workspace/embedded-world-demo-zenoh-flow"
+uri: "file://{{BASE_DIR }}/compute-minimum-distance/compute-miminum-distance.py"
 
 inputs:
   - id: scan

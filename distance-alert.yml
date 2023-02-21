@@ -1,6 +1,6 @@
 flow: DistanceAlert
 vars:
- BASE_DIR: "/home/ato/embedded-world-zf"
+ BASE_DIR: "/home/ato/Workspace/embedded-world-demo-zenoh-flow"
 configuration:
       subscriber: "simu/rt/scan"
       publisher: "zigbee2mqtt/device/bulb/set"
