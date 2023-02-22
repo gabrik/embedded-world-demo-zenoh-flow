@@ -80,7 +80,7 @@ class ComputeProximity(Operator):
             red = round(255 * prox_level / self.nb_proximity_level)
             green = round(255 * (1 - (prox_level / self.nb_proximity_level)))
             blue = 0
-            print(f"range={range} => proximity_level={prox_level} => publish brightness={brightness},RGB=({red},{green},{blue}) to light ")
+            print(f"min_dist={distance} => proximity_level={prox_level} => publish brightness={brightness},RGB=({red},{green},{blue}) to light ")
             # publish over zenoh the JSON message setting the lightbulb brightness and color
             # (see supported JSON attributes in https://www.zigbee2mqtt.io/devices/33943_33944_33946.html)
             ctrl_data = {'brightness': brightness, 'color': {'r': red, 'g': green, 'b': blue}}

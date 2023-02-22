@@ -1,25 +1,21 @@
 use async_trait::async_trait;
 use flume::Receiver;
 use std::sync::Arc;
-use zenoh::{
-    prelude::{r#async::AsyncResolve, SplitBuffer},
-    sample::Sample,
-    Session, SessionDeclarations,
-};
+use zenoh::{prelude::r#async::*, subscriber::Subscriber};
 use zenoh_flow::prelude::*;
 
 static PORT_ID: &str = "Data";
 static KE: &str = "scan";
 
 #[export_source]
-pub struct ZenohSource {
+pub struct ZenohSource<'a> {
     _session: Arc<Session>,
     data: OutputRaw,
-    subscriber: Arc<Receiver<Sample>>,
+    subscriber: Subscriber<'a, Receiver<Sample>>,
 }
 
 #[async_trait]
-impl Source for ZenohSource {
+impl<'a> Source for ZenohSource<'a> {
     async fn new(
         context: Context,
         configuration: Option<Configuration>,
@@ -29,34 +25,32 @@ impl Source for ZenohSource {
             .take_raw(PORT_ID)
             .ok_or(zferror!(ErrorKind::NotFound, "Output Data not found!!"))?;
 
-        let subscriber = match configuration {
+        let ke = match configuration {
             Some(configuration) => match configuration.get("subscriber") {
                 Some(ke) => match ke.as_str() {
-                    Some(ke) => context.zenoh_session().declare_subscriber(ke).res().await,
-                    None => context.zenoh_session().declare_subscriber(KE).res().await,
+                    Some(ke) => ke.to_string(),
+                    None => KE.to_string(),
                 },
-                None => context.zenoh_session().declare_subscriber(KE).res().await,
+                None => KE.to_string(),
             },
-            None => context.zenoh_session().declare_subscriber(KE).res().await,
-        }?
-        .to_owned();
+            None => KE.to_string(),
+        };
 
+        let subscriber = context.zenoh_session().declare_subscriber(&ke).res().await?;
         Ok(ZenohSource {
             _session: context.zenoh_session(),
             data,
-            subscriber: Arc::new(subscriber),
+            subscriber,
         })
     }
 }
 
 #[async_trait]
-impl Node for ZenohSource {
+impl<'a> Node for ZenohSource<'a> {
     async fn iteration(&self) -> Result<()> {
         let sample = self.subscriber.recv_async().await?;
-
-        self.data
-            .send(sample.payload.contiguous().to_vec(), None)
-            .await?;
+        let data = sample.payload.contiguous().to_vec();
+        self.data.send(data, None).await?;
 
         Ok(())
     }

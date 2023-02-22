@@ -65,18 +65,16 @@ class LidarProcess(Operator):
 
         # create new messge
         new_scan = LaserScan()
-        new_scan.stamp_sec = scan.stamp_sec
-        new_scan.stamp_nsec = scan.stamp_nsec
-        new_scan.frame_id = scan.frame_id
-        new_scan.angle_min = round(360-self.interest_angle/2)
-        new_scan.angle_max = round(self.interest_angle/2)
+        new_scan.header = scan.header
+        new_scan.angle_min = float(360-self.interest_angle/2)
+        new_scan.angle_max = float(self.interest_angle/2)
         new_scan.angle_increment = scan.angle_increment
         new_scan.time_increment = scan.time_increment
         new_scan.scan_time: new_scan.scan_time
         new_scan.range_min = min(new_range)
-        new_scan.range_max: max(new_range)
-        new_scan.ranges: new_range
-        new_scan.intensities: new_intensities
+        new_scan.range_max = max(new_range)
+        new_scan.ranges = new_range
+        new_scan.intensities = new_intensities
 
         # serialize new ROS2 message
         new_serialized_scan = _rclpy.rclpy_serialize(new_scan, LaserScan)
