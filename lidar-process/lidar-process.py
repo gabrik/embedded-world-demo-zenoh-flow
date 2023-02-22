@@ -22,7 +22,7 @@ from typing import Dict, Any
 from rclpy.impl.implementation_singleton import rclpy_implementation as _rclpy
 from rclpy.type_support import check_for_type_support
 
-from sensor_msg.msg import LaserScan
+from sensor_msgs.msg import LaserScan
 
 PROXIMITY_SCAN_ANGLE = 60
 

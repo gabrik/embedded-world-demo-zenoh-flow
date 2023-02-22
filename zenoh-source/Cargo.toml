@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 flume = "0.10.14"
-zenoh-flow = { version = "=0.4.0-alpha.1"}
+zenoh-flow = { version = "=0.4.0-alpha.2"}
 async-trait = "0.1"
 zenoh = "0.7.0-rc"
 
