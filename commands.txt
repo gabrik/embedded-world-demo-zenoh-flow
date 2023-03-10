@@ -1,0 +1,3 @@
+./start-zenoh.sh
+
+cd ./embedded-world-demo-zenoh-flow && zfctl launch distance-alert.yml

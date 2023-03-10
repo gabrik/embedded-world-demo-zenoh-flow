@@ -74,6 +74,7 @@ class ComputeProximity(Operator):
         prox_level = round((self.max_range - distance) * self.nb_proximity_level / (self.max_range - self.min_range))
         prox_level = max(min(prox_level, self.nb_proximity_level), 0)
         # if proximity level changed:
+        print(f'Distance {distance} Proximity Level {prox_level}')
         if (prox_level != self.last_prox_level):
             # compute brightness and color depending the proximity level
             brightness = 15 + (prox_level * 240) / self.nb_proximity_level

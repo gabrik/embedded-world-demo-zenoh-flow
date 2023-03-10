@@ -1,0 +1,46 @@
+{
+"listen":{
+           "endpoints":["tcp/0.0.0.0:7448"]
+
+   },
+"connect":{
+  "endpoints":["tcp/demo.zenoh.io:7447", "tcp/jubot.local:7447", "tcp/mqtt.local:7447"]
+},
+  "timestamping": {
+    "enabled": { "router": false, "peer": false, "client": false },
+    "drop_future_timestamp": false
+  },
+  "scouting":{
+        "multicast":{
+                "enabled": true,
+		"autoconnect": { "router": "router|peer"}
+        }
+   },
+"plugins_search_dirs":[
+      "/usr/lib/"
+   ],
+   "plugins":{
+	           "storage_manager":{
+        "required":true,
+        "storages":{
+            "zfrpc":{
+                "key_expr":"zf/runtime/**",
+                "volume": "memory"
+            },
+            "zf":{
+                "key_expr":"zenoh-flow/**",
+                "volume": "memory"
+            }
+             }
+
+        },
+      "zenoh_flow":{
+	 "name":"ws",
+         "required":true,
+         "path":"/etc/zenoh-flow",
+         "pid_file":"/var/zenoh-flow/runtime.pid",
+         "extensions":"/etc/zenoh-flow/extensions.d",
+         "worker_pool_size":4
+      }
+   }
+}

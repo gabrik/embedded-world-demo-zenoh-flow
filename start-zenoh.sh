@@ -1,0 +1,1 @@
+RUST_LOG=zenoh_flow=debug zenohd -c zenoh-config.json

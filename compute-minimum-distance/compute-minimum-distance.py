@@ -56,8 +56,11 @@ class ComputeMinimumDistance(Operator):
         # deserialize ROS2 message
         scan = _rclpy.rclpy_deserialize(data_msg.data, LaserScan)
 
-        # get minimum angle
-        distance = min(scan.ranges)
+        # bad-quality lidar might send 0.0 ranges... filter those out
+        ranges = [s for s in scan.ranges if s > 0.0]
+
+        # get averange distance
+        distance = float(sum(ranges)/len(ranges))
 
         # create message
         min_distance = Float32()

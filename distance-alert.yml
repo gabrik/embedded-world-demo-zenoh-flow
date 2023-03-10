@@ -1,8 +1,8 @@
 flow: DistanceAlert
 vars:
- BASE_DIR: "/home/gabri/Workspace/embedded-world-demo-zenoh-flow"
+ BASE_DIR: "/home/guest/zenoh-flow-0.4.0-alpha.2/embedded-world-demo-zenoh-flow"
 configuration:
-      subscriber: "testbot/rt/scan"
+      subscriber: "bot1/rt/scan"
       publisher: "zigbee2mqtt/device/bulb/set"
 
 operators:
