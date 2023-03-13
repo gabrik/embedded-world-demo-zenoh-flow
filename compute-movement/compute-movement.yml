@@ -1,0 +1,15 @@
+id: compute-movement
+vars:
+ BASE_DIR: "/home/guest/zenoh-flow-0.4.0-alpha.2/embedded-world-demo-zenoh-flow"
+uri: "file://{{BASE_DIR }}/compute-movement/compute-movement.py"
+configuration:
+  time: 2
+  angular_scale: 0.5
+  linear_scale: 0.2
+inputs:
+  - id: button
+    type: _any_
+
+outputs:
+  - id: twist
+    type: Twist

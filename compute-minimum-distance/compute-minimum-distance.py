@@ -59,6 +59,9 @@ class ComputeMinimumDistance(Operator):
         # bad-quality lidar might send 0.0 ranges... filter those out
         ranges = [s for s in scan.ranges if s > 0.0]
 
+        if len(ranges) == 0:
+            return None
+
         # get averange distance
         distance = float(sum(ranges)/len(ranges))
 

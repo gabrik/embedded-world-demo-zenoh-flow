@@ -1,17 +1,13 @@
-flow: DistanceAlert
+flow: ButtonCommand
 vars:
  BASE_DIR: "/home/guest/zenoh-flow-0.4.0-alpha.2/embedded-world-demo-zenoh-flow"
 configuration:
-      subscriber: "bot1/rt/scan"
-      publisher: "zigbee2mqtt/device/bulb/set"
+      subscriber: "zigbee2mqtt/device/button"
+      publisher: "bot1/rt/cmd_vel"
 
 operators:
-  - id : Process
-    descriptor: "file://{{ BASE_DIR }}/lidar-process/lidar-process.yml"
-  - id : Minimum
-    descriptor: "file://{{ BASE_DIR }}/compute-minimum-distance/compute-minimum-distance.yml"
-  - id : Proximity
-    descriptor: "file://{{ BASE_DIR }}/compute-proximity/compute-proximity.yml"
+  - id : ComputeMovement
+    descriptor: "file://{{ BASE_DIR }}/compute-movement/compute-movement.yml"
 sources:
   - id : ZenohSrc
     descriptor: "file://{{ BASE_DIR }}/zenoh-source/zenoh-source.yml"
@@ -24,26 +20,12 @@ links:
     node : ZenohSrc
     output : Data
   to:
-    node : Process
-    input : scan
+    node : ComputeMovement
+    input : button
 
 - from:
-    node : Process
-    output : front_scan
-  to:
-    node : Minimum
-    input : scan
-
-- from:
-    node : Minimum
-    output : distance
-  to:
-    node : Proximity
-    input : distance
-
-- from:
-    node : Proximity
-    output : light
+    node : ComputeMovement
+    output : twist
   to:
     node : ZenohSink
     input : Data
